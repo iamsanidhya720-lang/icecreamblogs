@@ -1,212 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icecream Blogs | Sanidhya</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #1a1a1a;
-            scroll-behavior: smooth;
-        }
-        .serif-title {
-            font-family: 'Lora', serif;
-        }
-        .blog-content p {
-            margin-bottom: 1.5rem;
-            line-height: 1.75;
-            font-size: 1.125rem;
-        }
-        .sidebar-sticky {
-            position: sticky;
-            top: 2rem;
-        }
-        .transition-all {
-            transition: all 0.2s ease-in-out;
-        }
-        /* Hidden state for search */
-        .hidden-post {
-            display: none !important;
-        }
-        /* Custom scrollbar for mobile social bar */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Blog Editor</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: #f4f1ec; min-height: 100vh; padding: 30px 20px; }
+  h1 { text-align: center; font-size: 1.8rem; color: #2c2c2c; margin-bottom: 6px; }
+  .subtitle { text-align: center; color: #888; font-size: 0.85rem; font-family: sans-serif; margin-bottom: 30px; }
+  .container { max-width: 860px; margin: 0 auto; }
+  .card { background: #fff; border-radius: 12px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  label { display: block; font-family: sans-serif; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #666; margin-bottom: 8px; }
+  input[type="text"], input[type="datetime-local"] { width: 100%; padding: 10px 14px; border: 1.5px solid #e0dbd2; border-radius: 8px; font-size: 1rem; font-family: Georgia, serif; color: #2c2c2c; background: #fdfcfa; outline: none; }
+  input:focus { border-color: #b07d4f; }
+  .row { display: flex; gap: 12px; align-items: flex-end; margin-top: 16px; }
+  .row .field { flex: 1; }
+  textarea { width: 100%; min-height: 220px; padding: 14px; border: 1.5px solid #e0dbd2; border-radius: 8px; font-size: 1.05rem; font-family: Georgia, serif; color: #2c2c2c; background: #fdfcfa; line-height: 1.75; resize: vertical; outline: none; }
+  textarea:focus { border-color: #b07d4f; }
+  .hint { font-family: sans-serif; font-size: 0.78rem; color: #aaa; margin-top: 6px; }
+  .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-family: sans-serif; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+  .btn-gold { background: #b07d4f; color: #fff; }
+  .btn-gold:hover { background: #8f6238; }
+  .btn-now { background: #f0ebe2; color: #6b4c2a; height: 40px; align-self: flex-end; }
+  .btn-now:hover { background: #e0d5c5; }
+  .btn-clear { background: #f4f1ec; color: #888; }
+  .tabs { display: flex; gap: 4px; border-bottom: 2px solid #f0ebe2; margin-bottom: 16px; }
+  .tab { padding: 8px 18px; border: none; background: none; cursor: pointer; font-family: sans-serif; font-size: 0.88rem; font-weight: 600; color: #aaa; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab.active { color: #b07d4f; border-bottom-color: #b07d4f; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  #preview-box { min-height: 120px; padding: 18px; border: 1.5px solid #e0dbd2; border-radius: 8px; background: #fdfcfa; line-height: 1.8; }
+  #preview-box .post-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 6px; }
+  #preview-box .post-meta { font-size: 0.82rem; color: #999; font-family: sans-serif; margin-bottom: 16px; }
+  #html-output { width: 100%; min-height: 160px; padding: 14px; border: 1.5px solid #e0dbd2; border-radius: 8px; background: #1e1e1e; color: #d4c5a9; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.6; resize: vertical; outline: none; }
+  .copy-row { display: flex; justify-content: flex-end; margin-top: 10px; }
+  .btn-copy { background: #2c2c2c; color: #d4c5a9; font-size: 0.82rem; }
+  .btn-copy:hover { background: #444; }
+  .btn-copy.copied { background: #4a7c59; color: #fff; }
+  .actions { display: flex; gap: 10px; margin-top: 16px; }
+</style>
 </head>
-<body class="antialiased">
+<body>
+<div class="container">
+  <h1>✍️ Blog Editor</h1>
+  <p class="subtitle">Just write — &lt;p&gt; and &lt;br&gt; tags are added automatically</p>
 
-    <!-- Top Navigation Bar -->
-    <nav class="border-b border-gray-100 py-4 px-6 bg-white sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-black rounded-sm flex items-center justify-center text-white font-bold text-xs">IB</div>
-                <span class="font-semibold tracking-tight uppercase text-sm">Icecream Blogs</span>
-            </div>
-            <a href="https://sanidhyas.vercel.app" target="_blank" class="text-xs font-medium text-gray-500 hover:text-black uppercase tracking-widest transition-all">Portfolio →</a>
-        </div>
-    </nav>
-
-    <!-- MOBILE TOOLBAR (Sticky at Top) -->
-    <div class="md:hidden sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 p-4 shadow-sm">
-        <div class="flex items-center space-x-5 mb-4 overflow-x-auto no-scrollbar pb-1">
-            <a href="https://instagram.com" class="text-gray-400 hover:text-pink-600"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-            <a href="https://linkedin.com" class="text-gray-400 hover:text-blue-700"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-            <a href="https://x.com" class="text-gray-400 hover:text-black"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"/></svg></a>
-            <a href="https://youtube.com" class="text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-            <button onclick="resetFilters()" class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter border border-gray-200 px-2 py-1 rounded">Reset</button>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-            <input type="text" onkeyup="filterBlogs()" id="blogSearchMobile" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
-            <input type="date" onchange="filterBlogs()" id="dateSearchMobile" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
-        </div>
+  <div class="card">
+    <div><label>Post Title</label><input type="text" id="title" placeholder="Enter your blog post title…"></div>
+    <div class="row">
+      <div class="field"><label>Date & Time</label><input type="datetime-local" id="datetime"></div>
+      <button class="btn btn-now" onclick="setNow()">📅 Now</button>
     </div>
+  </div>
 
-    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 mt-12 pb-24">
-        
-        <!-- Left Sidebar (Desktop Only) -->
-        <aside class="hidden md:block md:col-span-3">
-            <div class="sidebar-sticky">
-                <h1 class="serif-title text-3xl mb-6">Sanidhya</h1>
-                
-                <!-- Social Links -->
-                <div class="space-y-4 mb-12">
-                    <a href="https://instagram.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://x.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"/></svg>
-                        <span>X (Twitter)</span>
-                    </a>
-                    <a href="https://youtube.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        <span>YouTube</span>
-                    </a>
-                </div>
+  <div class="card">
+    <label>Your Content</label>
+    <textarea id="content" placeholder="Just type your content here…
 
-                <!-- FILTER TOOLS -->
-                <div class="mt-12 pt-12 border-t border-gray-100">
-                    <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Search or Filter</label>
-                    <input type="text" id="blogSearch" onkeyup="filterBlogs()" placeholder="Keyword..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400 mb-3">
-                    <input type="date" id="dateSearch" onchange="filterBlogs()" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
-                    <button onclick="resetFilters()" class="mt-2 text-[10px] text-gray-400 hover:text-blue-600 underline">Clear Filters</button>
-                </div>
-            </div>
-        </aside>
+Leave a blank line between paragraphs → becomes a &lt;p&gt; tag.
+A single line break → becomes a &lt;br&gt; tag.
 
-        <!-- Main Content Area -->
-        <main class="col-span-1 md:col-span-9 max-w-2xl" id="blogContainer">
-
-             <!-- Post #3 -->
-            <article class="blog-post mb-20 transition-all" data-date="2024-02-26">
-                <header class="mb-6">
-                    <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">Vision 2026-27</h2>
-                    <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                        <span class="blog-date">February 28, 2026</span>
-                        <span>•</span>
-                        <span>4:45 AM</span>
-                    </div>
-                </header>
-                <div class="blog-content text-gray-800">
-                    <p>How do I look at Content Now?</p>
-                    <p> The Actual moat is content for sure. People are spending crazy numbers on their social media and digital devices. Our Goal is very simple.</p>
-                    <p> From March to May 2026 we are focusing on Linkedin Only! </p>
-                <p>     After which from May to August our goal is only going to be on Linkedin, Instagram and Startup. 
-                    After 100k on Hindi Insta Page, Make content like Sharanya Nambyaar (Stories) for relatability on thatbtguy.</p>     
-                  <P>  Our Hindi Channel should scale for major money to flow inside. We also have to work on the startups, which is a topic for tomorrow.</P>
-                  <P>  From Septembet to November our Focus is going to be on the English Channel.</P>
-                  <p>  In December 2026, We are going to focus on AI Music (Thatbtguy) Looking forward for its growth</p>
-                    
-                    Now in 2027, Our main goal is to get to No BS Podcast out!
-                    
-                   <P> Till Now, We are only working on Short Form Content and scaling it! (Everyday)</p>
-
-                    <p> In March 2027, We will focus on Long Format on YT!</p>
-                
-                </div>
-            </article>
-            
-            <!-- Post #2 -->
-            <article class="blog-post mb-20 transition-all" data-date="2024-02-26">
-                <header class="mb-6">
-                    <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">Designing for Simplicity</h2>
-                    <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                        <span class="blog-date">February 26, 2024</span>
-                        <span>•</span>
-                        <span>4:45 PM</span>
-                    </div>
-                </header>
-                <div class="blog-content text-gray-800">
-                    <p>Good design is often about what you take away, not what you add. In this blog, I want to explore how minimalist interfaces improve focus.</p>
-                </div>
-            </article>
-
-
-            <!-- Post #1 -->
-            <article class="blog-post mb-20 transition-all border-t border-gray-100 pt-12" data-date="2024-02-25">
-                <header class="mb-6">
-                    <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">My First Blog Post</h2>
-                    <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                        <span class="blog-date">February 25, 2024</span>
-                        <span>•</span>
-                        <span>1:30 PM</span>
-                    </div>
-                </header>
-                <div class="blog-content text-gray-800">
-                    <p>Welcome to Icecream Blogs. This is where I'll be sharing my thoughts on technology, design, and life.</p>
-                </div>
-            </article>
-
-        </main>
+No need to write any HTML manually!"></textarea>
+    <p class="hint">Blank line = new &lt;p&gt; &nbsp;|&nbsp; Single line break = &lt;br&gt;</p>
+    <div class="actions">
+      <button class="btn btn-gold" onclick="generate()">⚡ Generate HTML</button>
+      <button class="btn btn-clear" onclick="clearAll()">Clear</button>
     </div>
+  </div>
 
-    <script>
-        function filterBlogs() {
-            const textInput = document.getElementById('blogSearch').value || document.getElementById('blogSearchMobile').value;
-            const textFilter = textInput.toLowerCase();
-            const dateInput = document.getElementById('dateSearch').value || document.getElementById('dateSearchMobile').value;
-            const posts = document.getElementsByClassName('blog-post');
+  <div class="card" id="output-card" style="display:none">
+    <div class="tabs">
+      <button class="tab active" id="tab-btn-preview" onclick="switchTab('preview',this)">👁 Preview</button>
+      <button class="tab" id="tab-btn-html" onclick="switchTab('html',this)">🔖 HTML Code</button>
+    </div>
+    <div class="tab-content active" id="tab-preview"><div id="preview-box"></div></div>
+    <div class="tab-content" id="tab-html">
+      <textarea id="html-output" readonly></textarea>
+      <div class="copy-row"><button class="btn btn-copy" id="copy-btn" onclick="copyHTML()">📋 Copy HTML</button></div>
+    </div>
+  </div>
+</div>
 
-            for (let i = 0; i < posts.length; i++) {
-                const heading = posts[i].getElementsByClassName('blog-heading')[0].innerText.toLowerCase();
-                const postDate = posts[i].getAttribute('data-date');
-                
-                let matchesText = heading.includes(textFilter);
-                let matchesDate = dateInput === "" || postDate === dateInput;
-
-                if (matchesText && matchesDate) {
-                    posts[i].classList.remove('hidden-post');
-                } else {
-                    posts[i].classList.add('hidden-post');
-                }
-            }
-        }
-
-        function resetFilters() {
-            document.getElementById('blogSearch').value = "";
-            document.getElementById('blogSearchMobile').value = "";
-            document.getElementById('dateSearch').value = "";
-            document.getElementById('dateSearchMobile').value = "";
-            filterBlogs();
-        }
-
-        // Removed auto-hide functionality to ensure all blogs are visible on load
-        window.onload = function() {
-            console.log("All blogs loaded and visible.");
-        };
-    </script>
+<script>
+  setNow();
+  function setNow() {
+    const now = new Date(), p = n => String(n).padStart(2,'0');
+    document.getElementById('datetime').value = `${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())}T${p(now.getHours())}:${p(now.getMinutes())}`;
+  }
+  function textToHTML(text) {
+    return text.split(/\n\s*\n/).map(para => {
+      const t = para.trim();
+      if (!t) return '';
+      return `<p>${t.split('\n').map(l=>l.trim()).join('<br>\n  ')}</p>`;
+    }).filter(Boolean).join('\n\n');
+  }
+  function formatDate(v) {
+    if (!v) return '';
+    return new Date(v).toLocaleString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  }
+  function generate() {
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+    const dt = document.getElementById('datetime').value;
+    if (!content) { alert('Please write some content first!'); return; }
+    const htmlContent = textToHTML(content);
+    const dateStr = formatDate(dt);
+    let fullHTML = '';
+    if (title) fullHTML += `<h2>${title}</h2>\n`;
+    if (dateStr) fullHTML += `<p class="post-meta">${dateStr}</p>\n\n`;
+    fullHTML += htmlContent;
+    let previewHTML = '';
+    if (title) previewHTML += `<div class="post-title">${title}</div>`;
+    if (dateStr) previewHTML += `<div class="post-meta">${dateStr}</div>`;
+    previewHTML += htmlContent;
+    document.getElementById('preview-box').innerHTML = previewHTML;
+    document.getElementById('html-output').value = fullHTML;
+    document.getElementById('output-card').style.display = 'block';
+    document.getElementById('output-card').scrollIntoView({behavior:'smooth'});
+  }
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+name).classList.add('active');
+  }
+  function copyHTML() {
+    navigator.clipboard.writeText(document.getElementById('html-output').value).then(()=>{
+      const b = document.getElementById('copy-btn');
+      b.textContent = '✅ Copied!'; b.classList.add('copied');
+      setTimeout(()=>{ b.textContent='📋 Copy HTML'; b.classList.remove('copied'); }, 2000);
+    });
+  }
+  function clearAll() {
+    document.getElementById('title').value='';
+    document.getElementById('content').value='';
+    document.getElementById('output-card').style.display='none';
+    setNow();
+  }
+</script>
 </body>
 </html>
