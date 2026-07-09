@@ -3,220 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanidhya Blogs | Sanidhya</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
+    <title>Sanidhya Sangle</title>
     <style>
+        /* 
+         * Extreme Minimalist Styling (Paul Graham / Patrick Collison style)
+         * No frameworks, zero unnecessary graphics. Words first.
+         */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff;
-            color: #1a1a1a;
-            scroll-behavior: smooth;
+            color: #000000;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
         }
-        .serif-title {
-            font-family: 'Lora', serif;
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
         }
-        .blog-content p {
-            margin-bottom: 1.5rem;
-            line-height: 1.75;
-            font-size: 1.125rem;
+
+        a {
+            color: #0000ee;
+            text-decoration: none;
+            cursor: pointer;
         }
-        .sidebar-sticky {
-            position: sticky;
-            top: 2rem;
+
+        a:hover {
+            text-decoration: underline;
         }
-        .transition-all {
-            transition: all 0.2s ease-in-out;
+
+        h1, h2, h3 {
+            font-weight: 600;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
-        /* Hidden state for search */
-        .hidden-post {
+
+        h1 { font-size: 1.5rem; }
+        h2 { font-size: 1.25rem; }
+        h3 { font-size: 1.1rem; }
+        
+        p {
+            margin-bottom: 1.2em;
+        }
+
+        /* Navigation */
+        nav {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .nav-separator {
+            margin: 0 8px;
+            color: #999;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.2em;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Utility */
+        .hidden {
             display: none !important;
         }
-        /* Custom scrollbar for mobile social bar */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+
+        .essay-date {
+            color: #666;
+            font-size: 0.9em;
+            display: inline-block;
+            width: 120px;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 2em 0;
+        }
+
+        img.profile {
+            width: 100px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        /* Game styling adapted for minimalism */
+        canvas {
+            background-color: #000;
+            display: block;
+            margin: 1rem 0;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        
+        .game-controls button {
+            background: #eee;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .game-controls button:hover {
+            background: #ddd;
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Top Navigation Bar -->
-    <nav class="border-b border-gray-100 py-4 px-6 bg-white sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-black rounded-sm flex items-center justify-center text-white font-bold text-xs">SB</div>
-                <span class="font-semibold tracking-tight uppercase text-sm">Sanidhya Blogs</span>
-            </div>
-            <a href="https://sanidhyas.vercel.app" target="_blank" class="text-xs font-medium text-gray-500 hover:text-black uppercase tracking-widest transition-all">Portfolio →</a>
-        </div>
-    </nav>
+    <div class="container">
+        <nav>
+            <strong>Sanidhya Sangle</strong>
+            <span class="nav-separator">·</span>
+            <a onclick="showSection('about')">About</a>
+            <span class="nav-separator">·</span>
+            <a onclick="showSection('essays')">Essays</a>
+        </nav>
 
-    <!-- MOBILE TOOLBAR (Sticky at Top) -->
-    <div class="md:hidden sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 p-4 shadow-sm">
-        <div class="flex items-center space-x-5 mb-4 overflow-x-auto no-scrollbar pb-1">
-            <a href="https://instagram.com" class="text-gray-400 hover:text-pink-600"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-            <a href="https://linkedin.com" class="text-gray-400 hover:text-blue-700"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-            <a href="https://x.com" class="text-gray-400 hover:text-black"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"/></svg></a>
-            <a href="https://youtube.com" class="text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-            <button onclick="resetFilters()" class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter border border-gray-200 px-2 py-1 rounded">Reset</button>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-            <input type="text" onkeyup="filterBlogs(event)" id="blogSearchMobile" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
-            <input type="date" onchange="filterBlogs(event)" id="dateSearchMobile" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
-        </div>
-    </div>
-
-    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 mt-12 pb-24">
-        
-        <!-- Left Sidebar (Desktop Only) -->
-        <aside class="hidden md:block md:col-span-3">
-            <div class="sidebar-sticky">
-                <h1 class="serif-title text-3xl mb-6">Sanidhya</h1>
-                
-                <!-- Social Links -->
-                <div class="space-y-4 mb-12">
-                    <a href="https://instagram.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://x.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.494h2.039L6.486 3.24H4.298l13.311 17.407z"/></svg>
-                        <span>X (Twitter)</span>
-                    </a>
-                    <a href="https://youtube.com" target="_blank" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        <span>YouTube</span>
-                    </a>
-                </div>
-
-                <!-- FILTER TOOLS -->
-                <div class="mt-12 pt-12 border-t border-gray-100">
-                    <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Search or Filter</label>
-                    <input type="text" id="blogSearch" onkeyup="filterBlogs(event)" placeholder="Keyword..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400 mb-3">
-                    <input type="date" id="dateSearch" onchange="filterBlogs(event)" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
-                    <button onclick="resetFilters()" class="mt-2 text-[10px] text-gray-400 hover:text-blue-600 underline">Clear Filters</button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="col-span-1 md:col-span-9 max-w-2xl" id="blogContainer">
+        <!-- ================================================= -->
+        <!-- 1. ABOUT / PORTFOLIO SECTION                      -->
+        <!-- ================================================= -->
+        <div id="section-about">
+            <img src="https://i.ibb.co/M521GM7X/sanidhya.png" alt="Sanidhya" class="profile" onerror="this.src='https://placehold.co/100x100/eeeeee/000000?text=SS'">
             
-            <!-- Blogs will be injected here automatically by JavaScript -->
-            <div id="dynamic-blogs-wrapper"></div>
+            <p>I am Sanidhya Sangle. I am 18 years old, based in Nashik, India. I spend my time building what I love on the internet.</p>
 
-            <!-- No Results Message -->
-            <div id="noResultsMessage" class="hidden text-center py-12">
-                <h3 class="text-xl font-medium text-gray-800 mb-2">No posts found</h3>
-                <p class="text-gray-500">Try adjusting your search terms or date filter.</p>
-                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium hover:bg-blue-100 transition-all">Clear Filters</button>
+            <h2>Currently Building</h2>
+            <ul>
+                <li><a href="https://bhakti-health.vercel.app" target="_blank">BeBalmy</a> — A next-gen mental health tool.</li>
+            </ul>
+
+            <h2>Already Built</h2>
+            <ul>
+                <li><a href="https://full-screen-kappa.vercel.app" target="_blank">Full Screen</a> — A utility web app.</li>
+                <li><a href="https://study-surfer.vercel.app" target="_blank">Study Surf</a> — A hobby project focused on utility.</li>
+            </ul>
+
+            <h2>Contact & Links</h2>
+            <p>
+                <a href="mailto:sanidhya.sangle@gmail.com">Email</a> • 
+                <a href="https://x.com/sanidhyasangle" target="_blank">Twitter</a> • 
+                <a href="https://github.com/thesaanidhya" target="_blank">GitHub</a> • 
+                <a href="https://linkedin.com/in/iamsanidhya/" target="_blank">LinkedIn</a> • 
+                <a href="https://www.youtube.com/@sanidhyasangle" target="_blank">YouTube</a> • 
+                <a href="https://instagram.com/thatbtguy.16" target="_blank">Instagram</a>
+            </p>
+
+            <hr>
+            
+            <h2>Space Invaders</h2>
+            <p>I built a game. Use the Left/Right arrows to move, and Spacebar to fire. If you are on mobile, use the buttons below the screen.</p>
+            
+            <div class="game-controls">
+                <button onclick="startGame()">Start Game</button>
+                <span id="game-status" style="margin-left: 10px; font-weight: bold;"></span>
             </div>
+            
+            <canvas id="gameCanvas" width="560" height="360"></canvas>
+            
+            <div class="game-controls">
+                <button ontouchstart="keys['ArrowLeft']=true" ontouchend="keys['ArrowLeft']=false" onmousedown="keys['ArrowLeft']=true" onmouseup="keys['ArrowLeft']=false">← Move Left</button>
+                <button ontouchstart="keys[' ']=true" ontouchend="keys[' ']=false" onmousedown="keys[' ']=true" onmouseup="keys[' ']=false">Fire</button>
+                <button ontouchstart="keys['ArrowRight']=true" ontouchend="keys['ArrowRight']=false" onmousedown="keys['ArrowRight']=true" onmouseup="keys['ArrowRight']=false">Move Right →</button>
+            </div>
+        </div>
 
-        </main>
+        <!-- ================================================= -->
+        <!-- 2. ESSAYS LIST SECTION                            -->
+        <!-- ================================================= -->
+        <div id="section-essays" class="hidden">
+            <h1>Essays</h1>
+            <ul id="essays-list" style="list-style-type: none; padding-left: 0;">
+                <!-- Javascript will populate this list automatically -->
+            </ul>
+        </div>
+
+        <!-- ================================================= -->
+        <!-- 3. SINGLE ESSAY READING VIEW                      -->
+        <!-- ================================================= -->
+        <div id="section-single-essay" class="hidden">
+            <h1 id="read-title"></h1>
+            <div style="color: #666; font-size: 0.9em; margin-bottom: 2em;" id="read-date"></div>
+            
+            <div id="read-content">
+                <!-- Javascript will inject the content here -->
+            </div>
+            
+            <hr>
+            <a onclick="showSection('essays')">← Back to Essays</a>
+        </div>
+
     </div>
 
     <script>
         // ==========================================
         // 📝 ADD YOUR NEW BLOGS HERE! 📝
         // ==========================================
-        // Just copy an existing block {} and paste it at the top of this list to add a new post.
-        // You don't need to touch any HTML code!
-        
-        const myBlogs = [
+        const myEssays = [
             {
                 title: "Designing for Simplicity",
-                date: "2024-02-26",
-                time: "4:45 PM",
-                content: "<p>Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away, not what you add. In this blog, I want to explore how minimalist interfaces improve focus.</p>"
+                date: "Feb 2024",
+                content: `
+                    <p>Good design is often about what you take away, not what you add. In this essay, I want to explore how minimalist interfaces improve focus.</p>
+                    <p>Look at the most enduring websites on the internet. Hacker News, Craigslist, Wikipedia. They don't rely on flashy animations or heavy frameworks. They rely on dense, highly readable information.</p>
+                    <p>When you remove the noise, the signal becomes clear.</p>
+                `
             },
             {
-                title: "My First Blog Post",
-                date: "2024-02-25",
-                time: "1:30 PM",
-                content: "<p>Welcome to Sanidhya Blogs. This is where I'll be sharing my thoughts on technology, design, and life.</p>"
+                title: "My First Essay",
+                date: "Jan 2024",
+                content: `
+                    <p>Welcome to my new site. I decided to combine my portfolio and my writing into one single, unified place.</p>
+                    <p>I'll be writing about things I learn, projects I build, and whatever else comes to mind. Thanks for reading.</p>
+                `
             }
         ];
 
         // ==========================================
-        // ⚙️ SYSTEM CODE (You don't need to edit below)
+        // ⚙️ ROUTING & BLOG LOGIC
         // ==========================================
-        
-        function renderBlogs(blogsToDisplay) {
-            const wrapper = document.getElementById('dynamic-blogs-wrapper');
-            const noResultsMsg = document.getElementById('noResultsMessage');
+        function renderEssayList() {
+            const listContainer = document.getElementById('essays-list');
+            listContainer.innerHTML = ''; 
+
+            myEssays.forEach((essay, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="essay-date">${essay.date}</span>
+                    <a onclick="openEssay(${index})">${essay.title}</a>
+                `;
+                listContainer.appendChild(li);
+            });
+        }
+
+        function openEssay(index) {
+            const essay = myEssays[index];
+            document.getElementById('read-title').innerText = essay.title;
+            document.getElementById('read-date').innerText = essay.date;
+            document.getElementById('read-content').innerHTML = essay.content;
             
-            if (blogsToDisplay.length === 0) {
-                wrapper.innerHTML = "";
-                noResultsMsg.classList.remove('hidden');
+            showSection('single-essay');
+            window.scrollTo(0, 0); 
+        }
+
+        function showSection(sectionName) {
+            document.getElementById('section-about').classList.add('hidden');
+            document.getElementById('section-essays').classList.add('hidden');
+            document.getElementById('section-single-essay').classList.add('hidden');
+
+            document.getElementById('section-' + sectionName).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // ==========================================
+        // 👾 SPACE INVADERS GAME LOGIC
+        // ==========================================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusText = document.getElementById('game-status');
+        
+        const keys = {};
+        let animationId;
+        
+        let game = { 
+            active: false, 
+            score: 0, 
+            player: { x: 260, y: 320, width: 40, height: 20 }, 
+            bullets: [], 
+            invaders: [], 
+            invaderDirection: 1, 
+            invaderSpeed: 1.2, 
+            lastShootTime: 0,
+            shootInterval: 80 
+        };
+
+        function initInvaders() {
+            game.invaders = [];
+            const rows = 4;
+            const cols = 8;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    game.invaders.push({ 
+                        x: c * 55 + 60, 
+                        y: r * 35 + 40, 
+                        width: 30, 
+                        height: 20, 
+                        alive: true 
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('keydown', e => {
+            keys[e.key] = true;
+            if (e.key === ' ' && game.active) e.preventDefault();
+        });
+        
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        function shoot() {
+            const now = Date.now();
+            if (now - game.lastShootTime >= game.shootInterval) {
+                game.bullets.push({ 
+                    x: game.player.x + 18, 
+                    y: game.player.y, 
+                    width: 4, 
+                    height: 12, 
+                    speed: 10 
+                });
+                game.lastShootTime = now;
+            }
+        }
+
+        function startGame() {
+            game.active = true;
+            game.score = 0;
+            game.bullets = [];
+            game.player.x = canvas.width / 2 - 20;
+            game.invaderSpeed = 1.2;
+            game.invaderDirection = 1;
+            statusText.innerText = "Game Running...";
+            statusText.style.color = "green";
+            initInvaders();
+            
+            if(!animationId) {
+                loop();
+            }
+        }
+
+        function gameOver(win) {
+            game.active = false;
+            statusText.innerText = win ? "MISSION SUCCESS! Score: " + game.score : "MISSION FAILED! Score: " + game.score;
+            statusText.style.color = win ? "green" : "red";
+        }
+
+        function update() {
+            if (!game.active) return;
+
+            let isMoving = false;
+            if (keys['ArrowLeft'] && game.player.x > 0) {
+                game.player.x -= 6;
+                isMoving = true;
+            }
+            if (keys['ArrowRight'] && game.player.x < canvas.width - game.player.width) {
+                game.player.x += 6;
+                isMoving = true;
+            }
+            
+            if (keys[' '] && !isMoving) {
+                shoot();
+            }
+
+            game.bullets = game.bullets.filter(b => {
+                b.y -= b.speed;
+                return b.y > 0;
+            });
+
+            let hitEdge = false;
+            let anyAlive = false;
+
+            game.invaders.forEach(inv => {
+                if (!inv.alive) return;
+                anyAlive = true;
+                inv.x += game.invaderSpeed * game.invaderDirection;
+                
+                if (inv.x <= 10 || inv.x >= canvas.width - inv.width - 10) hitEdge = true;
+                if (inv.y + inv.height >= game.player.y) {
+                    gameOver(false);
+                }
+            });
+
+            if (hitEdge) {
+                game.invaderDirection *= -1;
+                game.invaders.forEach(inv => inv.y += 18);
+                game.invaderSpeed += 0.05;
+            }
+
+            if (!anyAlive) {
+                gameOver(true);
+            }
+
+            game.bullets.forEach(b => {
+                game.invaders.forEach(inv => {
+                    if (inv.alive && 
+                        b.x < inv.x + inv.width && 
+                        b.x + b.width > inv.x && 
+                        b.y < inv.y + inv.height && 
+                        b.y + b.height > inv.y) {
+                        
+                        inv.alive = false;
+                        b.y = -100; 
+                        game.score += 10;
+                    }
+                });
+            });
+        }
+
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (!game.active) {
+                ctx.fillStyle = '#fff';
+                ctx.font = '16px sans-serif';
+                ctx.fillText('Press "Start Game" to play', canvas.width/2 - 100, canvas.height/2);
                 return;
             }
 
-            noResultsMsg.classList.add('hidden');
-            
-            let htmlContent = "";
-            blogsToDisplay.forEach((blog, index) => {
-                const isNotFirst = index !== 0;
-                const borderClass = isNotFirst ? "border-t border-gray-100 pt-12" : "";
-                
-                htmlContent += `
-                    <article class="blog-post mb-20 transition-all ${borderClass}" data-date="${blog.date}">
-                        <header class="mb-6">
-                            <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">${blog.title}</h2>
-                            <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                                <span class="blog-date">${blog.date}</span>
-                                <span>•</span>
-                                <span>${blog.time}</span>
-                            </div>
-                        </header>
-                        <div class="blog-content text-gray-800">
-                            ${blog.content}
-                        </div>
-                    </article>
-                `;
-            });
-            
-            wrapper.innerHTML = htmlContent;
-        }
+            // Player
+            ctx.fillStyle = '#00ff00';
+            ctx.beginPath();
+            ctx.moveTo(game.player.x + 20, game.player.y);
+            ctx.lineTo(game.player.x + 40, game.player.y + 20);
+            ctx.lineTo(game.player.x, game.player.y + 20);
+            ctx.fill();
 
-        function filterBlogs(event) {
-            if (event && event.target) {
-                if (event.target.id === 'blogSearch') document.getElementById('blogSearchMobile').value = event.target.value;
-                if (event.target.id === 'blogSearchMobile') document.getElementById('blogSearch').value = event.target.value;
-                if (event.target.id === 'dateSearch') document.getElementById('dateSearchMobile').value = event.target.value;
-                if (event.target.id === 'dateSearchMobile') document.getElementById('dateSearch').value = event.target.value;
-            }
+            // Bullets
+            ctx.fillStyle = '#fff';
+            game.bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
 
-            const textInput = (document.getElementById('blogSearch').value || "").toLowerCase();
-            const dateInput = document.getElementById('dateSearch').value || "";
-            
-            const filteredBlogs = myBlogs.filter(blog => {
-                const matchesText = blog.title.toLowerCase().includes(textInput) || blog.content.toLowerCase().includes(textInput);
-                const matchesDate = dateInput === "" || blog.date === dateInput;
-                return matchesText && matchesDate;
+            // Invaders
+            game.invaders.forEach(inv => {
+                if (!inv.alive) return;
+                ctx.fillStyle = '#ff4444';
+                ctx.fillRect(inv.x, inv.y, inv.width, inv.height);
+                ctx.fillStyle = '#000';
+                ctx.fillRect(inv.x + 5, inv.y + 5, 5, 5);
+                ctx.fillRect(inv.x + 20, inv.y + 5, 5, 5);
             });
 
-            renderBlogs(filteredBlogs);
+            // Score
+            ctx.fillStyle = '#00ff00';
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillText('SCORE: ' + game.score.toString().padStart(4, '0'), 15, 25);
         }
 
-        function resetFilters() {
-            document.getElementById('blogSearch').value = "";
-            document.getElementById('blogSearchMobile').value = "";
-            document.getElementById('dateSearch').value = "";
-            document.getElementById('dateSearchMobile').value = "";
-            renderBlogs(myBlogs); 
+        function loop() {
+            update();
+            draw();
+            animationId = requestAnimationFrame(loop);
         }
 
         window.onload = function() {
-            renderBlogs(myBlogs);
+            renderEssayList();
+            showSection('about'); 
+            draw(); // Draw initial game screen
         };
     </script>
 </body>
