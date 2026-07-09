@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icecream Blogs | Sanidhya</title>
+    <title>Sanidhya Blogs | Sanidhya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -48,8 +49,8 @@
     <nav class="border-b border-gray-100 py-4 px-6 bg-white sticky top-0 z-50">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-black rounded-sm flex items-center justify-center text-white font-bold text-xs">IB</div>
-                <span class="font-semibold tracking-tight uppercase text-sm">Icecream Blogs</span>
+                <div class="w-8 h-8 bg-black rounded-sm flex items-center justify-center text-white font-bold text-xs">SB</div>
+                <span class="font-semibold tracking-tight uppercase text-sm">Sanidhya Blogs</span>
             </div>
             <a href="https://sanidhyas.vercel.app" target="_blank" class="text-xs font-medium text-gray-500 hover:text-black uppercase tracking-widest transition-all">Portfolio →</a>
         </div>
@@ -65,8 +66,8 @@
             <button onclick="resetFilters()" class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter border border-gray-200 px-2 py-1 rounded">Reset</button>
         </div>
         <div class="grid grid-cols-2 gap-2">
-            <input type="text" onkeyup="filterBlogs()" id="blogSearchMobile" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
-            <input type="date" onchange="filterBlogs()" id="dateSearchMobile" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
+            <input type="text" onkeyup="filterBlogs(event)" id="blogSearchMobile" placeholder="Search..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
+            <input type="date" onchange="filterBlogs(event)" id="dateSearchMobile" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none">
         </div>
     </div>
 
@@ -100,8 +101,8 @@
                 <!-- FILTER TOOLS -->
                 <div class="mt-12 pt-12 border-t border-gray-100">
                     <label class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Search or Filter</label>
-                    <input type="text" id="blogSearch" onkeyup="filterBlogs()" placeholder="Keyword..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400 mb-3">
-                    <input type="date" id="dateSearch" onchange="filterBlogs()" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
+                    <input type="text" id="blogSearch" onkeyup="filterBlogs(event)" placeholder="Keyword..." class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400 mb-3">
+                    <input type="date" id="dateSearch" onchange="filterBlogs(event)" class="w-full bg-gray-50 border border-gray-200 py-2 px-3 text-sm rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
                     <button onclick="resetFilters()" class="mt-2 text-[10px] text-gray-400 hover:text-blue-600 underline">Clear Filters</button>
                 </div>
             </div>
@@ -110,59 +111,100 @@
         <!-- Main Content Area -->
         <main class="col-span-1 md:col-span-9 max-w-2xl" id="blogContainer">
             
-            <!-- Post #2 -->
-            <article class="blog-post mb-20 transition-all" data-date="2024-02-26">
-                <header class="mb-6">
-                    <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">Designing for Simplicity</h2>
-                    <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                        <span class="blog-date">February 26, 2024</span>
-                        <span>•</span>
-                        <span>4:45 PM</span>
-                    </div>
-                </header>
-                <div class="blog-content text-gray-800">
-                    <p>Good design is often about what you take away, not what you add. In this blog, I want to explore how minimalist interfaces improve focus.</p>
-                </div>
-            </article>
+            <!-- Blogs will be injected here automatically by JavaScript -->
+            <div id="dynamic-blogs-wrapper"></div>
 
-            <!-- Post #1 -->
-            <article class="blog-post mb-20 transition-all border-t border-gray-100 pt-12" data-date="2024-02-25">
-                <header class="mb-6">
-                    <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">My First Blog Post</h2>
-                    <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
-                        <span class="blog-date">February 25, 2024</span>
-                        <span>•</span>
-                        <span>1:30 PM</span>
-                    </div>
-                </header>
-                <div class="blog-content text-gray-800">
-                    <p>Welcome to Icecream Blogs. This is where I'll be sharing my thoughts on technology, design, and life.</p>
-                </div>
-            </article>
+            <!-- No Results Message -->
+            <div id="noResultsMessage" class="hidden text-center py-12">
+                <h3 class="text-xl font-medium text-gray-800 mb-2">No posts found</h3>
+                <p class="text-gray-500">Try adjusting your search terms or date filter.</p>
+                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium hover:bg-blue-100 transition-all">Clear Filters</button>
+            </div>
 
         </main>
     </div>
 
     <script>
-        function filterBlogs() {
-            const textInput = document.getElementById('blogSearch').value || document.getElementById('blogSearchMobile').value;
-            const textFilter = textInput.toLowerCase();
-            const dateInput = document.getElementById('dateSearch').value || document.getElementById('dateSearchMobile').value;
-            const posts = document.getElementsByClassName('blog-post');
-
-            for (let i = 0; i < posts.length; i++) {
-                const heading = posts[i].getElementsByClassName('blog-heading')[0].innerText.toLowerCase();
-                const postDate = posts[i].getAttribute('data-date');
-                
-                let matchesText = heading.includes(textFilter);
-                let matchesDate = dateInput === "" || postDate === dateInput;
-
-                if (matchesText && matchesDate) {
-                    posts[i].classList.remove('hidden-post');
-                } else {
-                    posts[i].classList.add('hidden-post');
-                }
+        // ==========================================
+        // 📝 ADD YOUR NEW BLOGS HERE! 📝
+        // ==========================================
+        // Just copy an existing block {} and paste it at the top of this list to add a new post.
+        // You don't need to touch any HTML code!
+        
+        const myBlogs = [
+            {
+                title: "Designing for Simplicity",
+                date: "2024-02-26",
+                time: "4:45 PM",
+                content: "<p>Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away,Good design is often about what you take away, not what you add. In this blog, I want to explore how minimalist interfaces improve focus.</p>"
+            },
+            {
+                title: "My First Blog Post",
+                date: "2024-02-25",
+                time: "1:30 PM",
+                content: "<p>Welcome to Sanidhya Blogs. This is where I'll be sharing my thoughts on technology, design, and life.</p>"
             }
+        ];
+
+        // ==========================================
+        // ⚙️ SYSTEM CODE (You don't need to edit below)
+        // ==========================================
+        
+        function renderBlogs(blogsToDisplay) {
+            const wrapper = document.getElementById('dynamic-blogs-wrapper');
+            const noResultsMsg = document.getElementById('noResultsMessage');
+            
+            if (blogsToDisplay.length === 0) {
+                wrapper.innerHTML = "";
+                noResultsMsg.classList.remove('hidden');
+                return;
+            }
+
+            noResultsMsg.classList.add('hidden');
+            
+            let htmlContent = "";
+            blogsToDisplay.forEach((blog, index) => {
+                const isNotFirst = index !== 0;
+                const borderClass = isNotFirst ? "border-t border-gray-100 pt-12" : "";
+                
+                htmlContent += `
+                    <article class="blog-post mb-20 transition-all ${borderClass}" data-date="${blog.date}">
+                        <header class="mb-6">
+                            <h2 class="blog-heading serif-title text-3xl text-blue-700 hover:underline cursor-pointer mb-2">${blog.title}</h2>
+                            <div class="flex items-center space-x-3 text-xs text-gray-400 font-medium uppercase tracking-wider">
+                                <span class="blog-date">${blog.date}</span>
+                                <span>•</span>
+                                <span>${blog.time}</span>
+                            </div>
+                        </header>
+                        <div class="blog-content text-gray-800">
+                            ${blog.content}
+                        </div>
+                    </article>
+                `;
+            });
+            
+            wrapper.innerHTML = htmlContent;
+        }
+
+        function filterBlogs(event) {
+            if (event && event.target) {
+                if (event.target.id === 'blogSearch') document.getElementById('blogSearchMobile').value = event.target.value;
+                if (event.target.id === 'blogSearchMobile') document.getElementById('blogSearch').value = event.target.value;
+                if (event.target.id === 'dateSearch') document.getElementById('dateSearchMobile').value = event.target.value;
+                if (event.target.id === 'dateSearchMobile') document.getElementById('dateSearch').value = event.target.value;
+            }
+
+            const textInput = (document.getElementById('blogSearch').value || "").toLowerCase();
+            const dateInput = document.getElementById('dateSearch').value || "";
+            
+            const filteredBlogs = myBlogs.filter(blog => {
+                const matchesText = blog.title.toLowerCase().includes(textInput) || blog.content.toLowerCase().includes(textInput);
+                const matchesDate = dateInput === "" || blog.date === dateInput;
+                return matchesText && matchesDate;
+            });
+
+            renderBlogs(filteredBlogs);
         }
 
         function resetFilters() {
@@ -170,12 +212,11 @@
             document.getElementById('blogSearchMobile').value = "";
             document.getElementById('dateSearch').value = "";
             document.getElementById('dateSearchMobile').value = "";
-            filterBlogs();
+            renderBlogs(myBlogs); 
         }
 
-        // Removed auto-hide functionality to ensure all blogs are visible on load
         window.onload = function() {
-            console.log("All blogs loaded and visible.");
+            renderBlogs(myBlogs);
         };
     </script>
 </body>
